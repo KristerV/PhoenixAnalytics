@@ -104,12 +104,15 @@ defmodule PhoenixAnalytics.Services.Utility do
   """
   def mode() do
     duckdb_path = Application.fetch_env(:phoenix_analytics, :duckdb_path)
+    dbg(duckdb_path)
     postgre_repo = Application.fetch_env(:phoenix_analytics, :postgres_conn)
+    dbg(postgre_repo)
 
     cond do
       duckdb_path != :error and postgre_repo == :error -> :duck_only
       duckdb_path != :error and postgre_repo != :error -> :duck_postgres
       true -> :duck_only
     end
+    |> dbg
   end
 end
